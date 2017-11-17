@@ -1,0 +1,10 @@
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\bin\Debug\CableCloud.exe.config
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\bin\Debug\CableCloud.exe
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\bin\Debug\CableCloud.pdb
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\obj\Debug\CableCloud.csprojResolveAssemblyReference.cache
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\obj\Debug\CableCloud.csproj.CoreCompileInputs.cache
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\obj\Debug\CableCloud.exe
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\obj\Debug\CableCloud.pdb
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\bin\Debug\tsst_client.exe
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\bin\Debug\tsst_client.pdb
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_cable_cloud\CableCloud\CableCloud\bin\Debug\tsst_client.exe.config

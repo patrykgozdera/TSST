@@ -11,11 +11,13 @@ namespace tsst_client
     {
         public string s;
         public int inti;
+        public int port;
       
-        public Message(string s, int inti)
+        public Message(string str, int i, int p)
         {
-            this.s = s;
-            this.inti = inti;
+            this.s = str;
+            this.inti = i;
+            this.port = p;
         }
 
         public Message()

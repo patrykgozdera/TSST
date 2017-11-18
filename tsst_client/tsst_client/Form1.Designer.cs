@@ -28,37 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.message_tb = new System.Windows.Forms.TextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.logs_list = new System.Windows.Forms.ListBox();
             this.send = new System.Windows.Forms.Button();
-            this.connect = new System.Windows.Forms.Button();
+            this.receive_logs_list = new System.Windows.Forms.ListBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.nb_of_m_tb = new System.Windows.Forms.TextBox();
+            this.delay_tb = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.Label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // message_tb
             // 
-            this.message_tb.Location = new System.Drawing.Point(12, 58);
+            this.message_tb.Location = new System.Drawing.Point(12, 12);
             this.message_tb.Name = "message_tb";
             this.message_tb.Size = new System.Drawing.Size(490, 20);
             this.message_tb.TabIndex = 0;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
             // logs_list
             // 
             this.logs_list.FormattingEnabled = true;
+            this.logs_list.HorizontalScrollbar = true;
             this.logs_list.Location = new System.Drawing.Point(12, 122);
             this.logs_list.Name = "logs_list";
-            this.logs_list.Size = new System.Drawing.Size(490, 264);
+            this.logs_list.Size = new System.Drawing.Size(238, 277);
             this.logs_list.TabIndex = 3;
             // 
             // send
             // 
-            this.send.Location = new System.Drawing.Point(427, 84);
+            this.send.Location = new System.Drawing.Point(427, 38);
             this.send.Name = "send";
             this.send.Size = new System.Drawing.Size(75, 23);
             this.send.TabIndex = 4;
@@ -66,27 +68,99 @@
             this.send.UseVisualStyleBackColor = true;
             this.send.Click += new System.EventHandler(this.send_Click);
             // 
-            // connect
+            // receive_logs_list
             // 
-            this.connect.Location = new System.Drawing.Point(12, 12);
-            this.connect.Name = "connect";
-            this.connect.Size = new System.Drawing.Size(75, 23);
-            this.connect.TabIndex = 5;
-            this.connect.Text = "CONNECT";
-            this.connect.UseVisualStyleBackColor = true;
-            this.connect.Click += new System.EventHandler(this.connect_Click);
+            this.receive_logs_list.FormattingEnabled = true;
+            this.receive_logs_list.HorizontalScrollbar = true;
+            this.receive_logs_list.Location = new System.Drawing.Point(256, 122);
+            this.receive_logs_list.Name = "receive_logs_list";
+            this.receive_logs_list.Size = new System.Drawing.Size(246, 277);
+            this.receive_logs_list.TabIndex = 5;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // nb_of_m_tb
+            // 
+            this.nb_of_m_tb.Location = new System.Drawing.Point(12, 51);
+            this.nb_of_m_tb.Name = "nb_of_m_tb";
+            this.nb_of_m_tb.Size = new System.Drawing.Size(100, 20);
+            this.nb_of_m_tb.TabIndex = 6;
+            // 
+            // delay_tb
+            // 
+            this.delay_tb.Location = new System.Drawing.Point(129, 51);
+            this.delay_tb.Name = "delay_tb";
+            this.delay_tb.Size = new System.Drawing.Size(55, 20);
+            this.delay_tb.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Message";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 75);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "NbOfMessages";
+            // 
+            // Label3
+            // 
+            this.Label3.AutoSize = true;
+            this.Label3.Location = new System.Drawing.Point(126, 75);
+            this.Label3.Name = "Label3";
+            this.Label3.Size = new System.Drawing.Size(34, 13);
+            this.Label3.TabIndex = 10;
+            this.Label3.Text = "Delay";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 106);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(97, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Sended messages:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(253, 106);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(106, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Received messages:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 411);
-            this.Controls.Add(this.connect);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.delay_tb);
+            this.Controls.Add(this.nb_of_m_tb);
+            this.Controls.Add(this.receive_logs_list);
             this.Controls.Add(this.send);
             this.Controls.Add(this.logs_list);
             this.Controls.Add(this.message_tb);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Client Node";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -95,10 +169,17 @@
         #endregion
 
         private System.Windows.Forms.TextBox message_tb;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ListBox logs_list;
         private System.Windows.Forms.Button send;
-        private System.Windows.Forms.Button connect;
+        private System.Windows.Forms.ListBox receive_logs_list;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.TextBox nb_of_m_tb;
+        private System.Windows.Forms.TextBox delay_tb;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label Label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 

@@ -40,6 +40,11 @@
             this.Label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.connect_b = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // message_tb
@@ -90,6 +95,7 @@
             this.nb_of_m_tb.Name = "nb_of_m_tb";
             this.nb_of_m_tb.Size = new System.Drawing.Size(100, 20);
             this.nb_of_m_tb.TabIndex = 6;
+            this.nb_of_m_tb.Text = "1";
             // 
             // delay_tb
             // 
@@ -97,6 +103,7 @@
             this.delay_tb.Name = "delay_tb";
             this.delay_tb.Size = new System.Drawing.Size(55, 20);
             this.delay_tb.TabIndex = 7;
+            this.delay_tb.Text = "1";
             // 
             // label1
             // 
@@ -143,11 +150,60 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "Received messages:";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(259, 51);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(59, 20);
+            this.textBox1.TabIndex = 13;
+            this.textBox1.Text = "20000";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(256, 74);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "PortOUT";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(336, 51);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(59, 20);
+            this.textBox2.TabIndex = 15;
+            this.textBox2.Text = "30000";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(333, 74);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(37, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "PortIN";
+            // 
+            // connect_b
+            // 
+            this.connect_b.Location = new System.Drawing.Point(427, 70);
+            this.connect_b.Name = "connect_b";
+            this.connect_b.Size = new System.Drawing.Size(75, 23);
+            this.connect_b.TabIndex = 17;
+            this.connect_b.Text = "LISTEN";
+            this.connect_b.UseVisualStyleBackColor = true;
+            this.connect_b.Click += new System.EventHandler(this.connect_b_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 411);
+            this.Controls.Add(this.connect_b);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Label3);
@@ -180,6 +236,11 @@
         private System.Windows.Forms.Label Label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button connect_b;
     }
 }
 

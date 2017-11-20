@@ -10,14 +10,18 @@ namespace tsst_client
     public class Message
     {
         public string s;
-        public int inti;
-        public int port;
+        public int input_port;
+        public int output_port;
+        public string timestamp;
+        public string _interface;
       
-        public Message(string str, int i, int p)
+        public Message(string str, int i, int p, string time, string _in)
         {
             this.s = str;
-            this.inti = i;
-            this.port = p;
+            this.input_port = i;
+            this.output_port = p;
+            this.timestamp = time;
+            this._interface = _in;
         }
 
         public Message()

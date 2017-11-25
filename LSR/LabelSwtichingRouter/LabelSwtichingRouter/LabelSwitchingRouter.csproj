@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="ConnectionManager.cs" />
+    <Compile Include="FIB.cs" />
     <Compile Include="InOutModule.cs" />
     <Compile Include="LabelSwitchingRouter.cs" />
     <Compile Include="MPLSPacket.cs" />

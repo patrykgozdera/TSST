@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LabelSwtichingRouter
+namespace LabelSwitchingRouter
 {
     class LabelSwitchingRouter
     {
@@ -50,5 +50,19 @@ namespace LabelSwtichingRouter
                 inModules.Add(new InOutModule(interfaceAddress));
             }
         }
+        static int ip;
+        private List<InOutModule> inModules, outModules;
+        private FIB fib;
+
+        public LabelSwitchingRouter() {
+            inModules = new List<InOutModule>();
+            outModules = new List<InOutModule>();
+            fib = new FIB();
+
+        }
+
+        
+
+
     }
 }

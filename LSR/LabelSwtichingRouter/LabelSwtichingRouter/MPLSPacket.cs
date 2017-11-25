@@ -9,11 +9,11 @@ namespace LabelSwitchingRouter
     class MPLSPacket : MPLS
     {
         public Packet ipPacket;
-        
+
         public MPLSPacket(Packet ipPacket, int label)
         {
             this.ipPacket = ipPacket;
-            labelStack = new List<int>(label);
+            labelStack = new Stack<int>(label);
         }
     }
 }

@@ -8,57 +8,70 @@ namespace LabelSwitchingRouter
 {
     class InOutModule
     {
-<<<<<<< HEAD
-
-        protected static int portNumber;
-
+        protected static String portNumber;
         public InOutModule() { }
-
-
     }
 
     class InModule : InOutModule
     {
         private FIB fib;
-        public InModule(FIB subMasterFIB) { }
+        private string interfaceAddress;
+        private List<FIB.Entry> list;
 
-        public void receivePack(MPLSPack pack)
+        public InModule(String number, FIB subMasterFIB)
         {
-            pack.Unpack().ForEach(Route);
+            portNumber = number;
+            fib = subMasterFIB;
+        }
 
+        public InModule(string interfaceAddress, List<FIB.Entry> list)
+        {
+            this.interfaceAddress = interfaceAddress;
+            this.list = list;
+        }
+
+        public List<MPLSPacket> Route(MPLSPack pack)
+        {
+            List<MPLSPacket> packets = UnpackPack(pack);
+            packets.ForEach(ChangeLabel);
+            return packets;
+        }
+
+        public List<MPLSPacket> UnpackPack(MPLSPack pack)
+        {
+            return pack.Unpack();
+            //ForEach(ChangeLabel);
 
         }
 
-        private void Route(MPLSPacket packet)
+        private void ChangeLabel(MPLSPacket packet)
         {
-            fib.GetOutput(portNumber, packet.GetLabelFromStack());
-
+            Tuple<String, int> FIBOutput = fib.GetOutput(portNumber, packet.GetLabelFromStack());
+            String port = FIBOutput.Item1;
+            int label = FIBOutput.Item2;
+            packet.PutLabelOnStack(label);
         }
     }
 
     class OutModule : InOutModule
     {
         List<MPLSPacket> packetBuffer;
-        OutModule() {
+        public OutModule(String number)
+        {
+            portNumber = number;
             packetBuffer = new List<MPLSPacket>();
         }
 
-        public void addToBuffer(MPLSPacket packet) {
-            packetBuffer.Add(packet);
-
-        }
-
-=======
-        private String interfaceAddress;
-        public delegate void packageIsReadyDelegate();
-        public event packageIsReadyDelegate sendPackage;
-
-        public InOutModule(String interfaceAddress)
+        public void addToBuffer(MPLSPacket packet)
         {
-            this.interfaceAddress = interfaceAddress;
+            packetBuffer.Add(packet);
         }
->>>>>>> 1ef5590760b524e584a7869318504ba2536f9f84
+
+        public delegate void packIsReadyDelegate();
+        public event packIsReadyDelegate sendPackage;
+
     }
-
-
 }
+
+
+

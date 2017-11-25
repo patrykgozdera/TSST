@@ -9,43 +9,40 @@ namespace LabelSwitchingRouter
 {
     class LabelSwitchingRouter
     {
+        FIB fib;
         List<InOutModule> inModules;
         List<InOutModule> outModules;
+        int numberOfInputModules, numberOfOutputModules;
 
         public LabelSwitchingRouter()
         {
-            int numberOfInputModules = getInputModulesNumber();
-            int numberOfOutputModules = getOutputModulesNumber();
+            fib = new FIB();
+            numberOfInputModules = getInputModulesNumber();
+            numberOfOutputModules = getOutputModulesNumber();
             inModules = new List<InOutModule>();
             outModules = new List<InOutModule>();
-<<<<<<< HEAD
-            fib = new FIB();
 
-            inModules.Add(new InOutModule());
-
-=======
             createInModules(numberOfInputModules);
             createOutModules(numberOfOutputModules);
         }
         private int getInputModulesNumber()
         {
-            int number= Config.getIntegerProperty("NumberOfInputModules");
+            int number = Config.getIntegerProperty("NumberOfInputModules");
             return number;
         }
         private int getOutputModulesNumber()
         {
-            int number=Config.getIntegerProperty("NumberOfOutputModules");
+            int number = Config.getIntegerProperty("NumberOfOutputModules");
             return number;
->>>>>>> 1ef5590760b524e584a7869318504ba2536f9f84
+
         }
 
-        
         private void createOutModules(int numberOfOutputModules)
         {
-            for(int i=0; i<numberOfOutputModules; i++)
+            for (int i = 0; i < numberOfOutputModules; i++)
             {
-                String interfaceAddress = Config.getProperty("InModuleAddress" + numberOfOutputModules);
-                outModules.Add(new InOutModule(interfaceAddress));
+                String interfaceAddress = Config.getProperty("InModuleAddress" + i);
+                outModules.Add(new OutModule(interfaceAddress));
             }
 
         }
@@ -54,8 +51,8 @@ namespace LabelSwitchingRouter
         {
             for (int i = 0; i < numberOfInputModules; i++)
             {
-                String interfaceAddress = Config.getProperty("OutModuleAddress" + numberOfInputModules);
-                inModules.Add(new InOutModule(interfaceAddress));
+                String interfaceAddress = Config.getProperty("OutModuleAddress" + i);
+                inModules.Add(new InModule(interfaceAddress, fib.ReturnSubTable(interfaceAddress)));
             }
         }
 

@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LabelSwtichingRouter
+namespace LabelSwitchingRouter
 {
     class LabelSwitchingRouter
     {
+        static int ip;
+        private List<InOutModule> inModules, outModules;
+
+
+
     }
 }

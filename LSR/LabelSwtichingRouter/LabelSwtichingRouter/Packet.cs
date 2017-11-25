@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LabelSwtichingRouter
+namespace LabelSwitchingRouter
 {
     [Serializable]
     class Packet
@@ -17,7 +17,7 @@ namespace LabelSwtichingRouter
         public string timestamp;
         public string _interface;
 
-        public Packet(string packetBody,String destinationAddress, String sourceAddress, int destinationPort, int sourcePort, string time, string _in)
+        public Packet(string packetBody, String destinationAddress, String sourceAddress, int destinationPort, int sourcePort, string time, string _in)
         {
             this.s = packetBody;
             this.destinationAddress = destinationAddress;
@@ -28,7 +28,7 @@ namespace LabelSwtichingRouter
             this._interface = _in;
         }
 
-      
+
 
     }
 }

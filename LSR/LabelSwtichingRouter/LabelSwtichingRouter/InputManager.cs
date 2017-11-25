@@ -10,22 +10,12 @@ namespace LabelSwitchingRouter
 {
     class InputManager
     {
-        private Socket inputSocket, outputSocket;
+        private Socket inputSocket;
 
         public InputManager()
         {
             inputSocket = initalizeInputSocket();
-            outputSocket = initalizeOutputSocket();
         }
-
-        private Socket initalizeOutputSocket()
-        {
-            int port = Config.getIntegerProperty("CableCloudInPort");
-            String address = Config.getProperty("CableCloudAddress");
-            Socket createdSocket = createSocket(address, port);
-            return createdSocket;
-        }
-
         private Socket initalizeInputSocket()
         {
             int port = Config.getIntegerProperty("CableCloudOutPort");
@@ -37,6 +27,10 @@ namespace LabelSwitchingRouter
         {
             IPEndPoint ipe = new IPEndPoint(long.Parse(address), port);
             return new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+        }
+        public waitForInput()
+        {
+
         }
     }
 }

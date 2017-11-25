@@ -45,11 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
-    <Compile Include="ConnectionManager.cs" />
-    <Compile Include="FIB.cs" />
+    <Compile Include="InputManager.cs" />
     <Compile Include="InOutModule.cs" />
     <Compile Include="LabelSwitchingRouter.cs" />
     <Compile Include="MPLSPacket.cs" />
+    <Compile Include="OutputManager.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,7 +57,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="bin\Debug\LabelSwtichingRouter.exe.config" />
-    <None Include="LabelSwtichingRouter.exe.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,7 +10,7 @@ namespace LabelSwtichingRouter
     {
         static void Main(string[] args)
         {
-            String str=Config.getProperty("Key1");
+            String str=Config.getProperty("a");
             Console.WriteLine(str);
             Console.ReadLine();
         }

@@ -14,5 +14,11 @@ namespace LabelSwitchingRouter
             String value = ConfigurationManager.AppSettings[key];
             return value;
         }
+        public static int getIntegerProperty(String key)
+        {
+            String value = ConfigurationManager.AppSettings[key];
+            int intValue = int.Parse(value);
+            return intValue;
+        }
     }
 }

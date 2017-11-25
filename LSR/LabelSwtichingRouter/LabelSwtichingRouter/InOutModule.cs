@@ -8,6 +8,7 @@ namespace LabelSwitchingRouter
 {
     class InOutModule
     {
+<<<<<<< HEAD
 
         protected static int portNumber;
 
@@ -47,6 +48,16 @@ namespace LabelSwitchingRouter
 
         }
 
+=======
+        private String interfaceAddress;
+        public delegate void packageIsReadyDelegate();
+        public event packageIsReadyDelegate sendPackage;
+
+        public InOutModule(String interfaceAddress)
+        {
+            this.interfaceAddress = interfaceAddress;
+        }
+>>>>>>> 1ef5590760b524e584a7869318504ba2536f9f84
     }
 
 

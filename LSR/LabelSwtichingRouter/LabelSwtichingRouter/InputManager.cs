@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabelSwtichingRouter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,9 @@ namespace LabelSwitchingRouter
     class InputManager
     {
         private Socket inputSocket;
+
+        public delegate void ReceivedDelegate(object oSender, PacketPackage packet);
+        public event ReceivedDelegate ProcessPackage;
 
         public InputManager()
         {
@@ -28,9 +32,14 @@ namespace LabelSwitchingRouter
             IPEndPoint ipe = new IPEndPoint(long.Parse(address), port);
             return new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
         }
-        public waitForInput()
+        public void waitForInput()
         {
-
+            FireRecievedEvent(new PacketPackage());
+        }
+        public void FireRecievedEvent(PacketPackage package)
+        {
+            if (null != ProcessPackage)
+                ProcessPackage(this, package);
         }
     }
 }

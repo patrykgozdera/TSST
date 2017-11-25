@@ -51,6 +51,7 @@
     <Compile Include="MPLSPacket.cs" />
     <Compile Include="OutputManager.cs" />
     <Compile Include="Packet.cs" />
+    <Compile Include="PacketPackage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

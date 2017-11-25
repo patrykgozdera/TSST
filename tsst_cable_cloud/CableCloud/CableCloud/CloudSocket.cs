@@ -12,12 +12,14 @@ namespace CableCloud
     public class CloudSocket
     {
         static Socket output_socket = null;
-        static Socket inputSocket = null;
         static Socket foreignSocket = null;
         public Message messageOut = new Message();
         public Message messageIn = new Message();
         List<string> lines = new List<string>();
         List<int> lines2 = new List<int>();
+        int[] ports = new int[] { 20000, 30000 };//, 40000};
+        Thread[] threadarray = new Thread[3];
+
 
         public CloudSocket()
         {
@@ -25,17 +27,37 @@ namespace CableCloud
             ParseConfig();
         }
 
-        public void Listen()
+        T[] InitializeArray<T>(int length) where T : new()
         {
-            inputSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPAddress ipAdd = IPAddress.Parse("127.0.0.1");
-            IPEndPoint remoteEP = new IPEndPoint(ipAdd, 20000);
-            inputSocket.Bind(remoteEP);
+            T[] array = new T[length];
+            for (int i = 0; i < length; ++i)
+            {
+                array[i] = new T();
+            }
+
+            return array;
+        }
+
+        public void Listen2()
+        {
+            InputSocket[] iss = InitializeArray<InputSocket>(ports.Length);
+            for (int i = 0; i < ports.Length; i++)
+            {
+                iss[i] = new InputSocket(ports[i]);
+                Thread t = new Thread(Listen);
+                t.Start(iss[i]);                
+            }
+        }
+
+        public void Listen(object objs)
+        {
+            
             int i = 1;
             while(true)
             {
-                inputSocket.Listen(0);
-                foreignSocket = inputSocket.Accept();
+                InputSocket iss = objs as InputSocket;
+                iss.inputSocket.Listen(0);
+                foreignSocket = iss.inputSocket.Accept();
                 byte[] bytes = new byte[foreignSocket.SendBufferSize];
                 int readByte = foreignSocket.Receive(bytes);
 

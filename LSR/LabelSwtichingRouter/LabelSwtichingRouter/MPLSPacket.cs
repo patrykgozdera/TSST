@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace LabelSwitchingRouter
 {
-    [Serializable]
-    class MPLSPacket
+    class MPLSPacket : MPLS
     {
         public Packet ipPacket;
-        public List<int> labelStack;
-
+        
         public MPLSPacket(Packet ipPacket, int label)
         {
             this.ipPacket = ipPacket;

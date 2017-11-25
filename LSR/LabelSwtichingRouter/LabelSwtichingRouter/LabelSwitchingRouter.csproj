@@ -44,11 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commutator.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="FIB.cs" />
     <Compile Include="InOutModule.cs" />
     <Compile Include="LabelSwitchingRouter.cs" />
+    <Compile Include="MPLS.cs" />
+    <Compile Include="MPLSPack.cs" />
     <Compile Include="MPLSPacket.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="Program.cs" />
@@ -56,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="bin\Debug\LabelSwtichingRouter.vshost.exe.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

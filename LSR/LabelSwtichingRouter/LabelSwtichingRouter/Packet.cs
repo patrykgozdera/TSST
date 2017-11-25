@@ -16,7 +16,6 @@ namespace LabelSwitchingRouter
         public String sourceAddress;
         public string timestamp;
         public string _interface;
-
         public Packet(string packetBody, String destinationAddress, String sourceAddress, int destinationPort, int sourcePort, string time, string _in)
         {
             this.s = packetBody;

@@ -17,6 +17,8 @@ namespace LabelSwitchingRouter
             outModules = new List<InOutModule>();
             fib = new FIB();
 
+            inModules.Add(new InOutModule());
+
         }
 
         

@@ -51,7 +51,8 @@ namespace LabelSwitchingRouter
             if (entryToBeDeleted != null)
             {
                 routingTable.Remove(entryToBeDeleted);
-                Console.Write("Entry:  inport {0} inlabel {1} outport {2} outlabel {3} removed from FIB.", entryToBeDeleted.InPort, entryToBeDeleted.InLabel, entryToBeDeleted.OutPort, entryToBeDeleted.OutLabel);
+                Console.Write("Entry:  inport {0} inlabel {1} outport {2} outlabel {3} removed from FIB.",
+                    entryToBeDeleted.InPort, entryToBeDeleted.InLabel, entryToBeDeleted.OutPort, entryToBeDeleted.OutLabel);
             }
             else Console.Write("Entry with such input parameters doesn't exist in this FIB.");
         }
@@ -66,7 +67,7 @@ namespace LabelSwitchingRouter
             return routingTable.FindAll(x => x.InPort == iport).Find(y => y.InLabel == ilabel);
         }
 
-        private int[] GetOutput(int iport, int ilabel)
+        public int[] GetOutput(int iport, int ilabel)
         {
             Entry result = routingTable.FindAll(x => x.InPort == iport).Find(y => y.InLabel == ilabel);
             int[] outputPair = new int[2];

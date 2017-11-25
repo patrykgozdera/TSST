@@ -41,9 +41,9 @@ namespace LabelSwitchingRouter
             if (!routingTable.Contains(FindInput(inport, inlabel)))
             {
                 routingTable.Add(new Entry(inport, inlabel, outport, outlabel));
-                Console.Write("Added new entry in FIB: inport {0} inlabel {1} outport {2} outlabel {3}", inport, inlabel, outport, outlabel);
+                Console.WriteLine("Added new entry in FIB: inport {0} inlabel {1} outport {2} outlabel {3}", inport, inlabel, outport, outlabel);
             }
-            else Console.Write("Entry with such input parameters already exists. Delete it before adding new one.");
+            else Console.WriteLine("Entry with such input parameters already exists. Delete it before adding new one.");
         }
         public void RemoveEntry(String inport, int inlabel)
         {
@@ -51,10 +51,10 @@ namespace LabelSwitchingRouter
             if (entryToBeDeleted != null)
             {
                 routingTable.Remove(entryToBeDeleted);
-                Console.Write("Entry:  inport {0} inlabel {1} outport {2} outlabel {3} removed from FIB.",
+                Console.WriteLine("Entry:  inport {0} inlabel {1} outport {2} outlabel {3} removed from FIB.",
                     entryToBeDeleted.InPort, entryToBeDeleted.InLabel, entryToBeDeleted.OutPort, entryToBeDeleted.OutLabel);
             }
-            else Console.Write("Entry with such input parameters doesn't exist in this FIB.");
+            else Console.WriteLine("Entry with such input parameters doesn't exist in this FIB.");
         }
 
         public List<Entry> ReturnSubTable(String inport)

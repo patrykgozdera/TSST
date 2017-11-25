@@ -50,6 +50,8 @@
     <Compile Include="InputManager.cs" />
     <Compile Include="InOutModule.cs" />
     <Compile Include="LabelSwitchingRouter.cs" />
+    <Compile Include="ManagementApplication.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="MPLS.cs" />
     <Compile Include="MPLSPack.cs" />
     <Compile Include="MPLSPacket.cs" />

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelSwtichingRouter", "LabelSwtichingRouter\LabelSwtichingRouter.csproj", "{86EAF508-647A-4C2F-A4A6-8D275C127841}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelSwitchingRouter", "LabelSwtichingRouter\LabelSwitchingRouter.csproj", "{86EAF508-647A-4C2F-A4A6-8D275C127841}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

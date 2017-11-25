@@ -1,0 +1,10 @@
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\bin\Debug\tsst_client.exe.config
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\bin\Debug\tsst_client.exe
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\bin\Debug\tsst_client.pdb
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.csprojResolveAssemblyReference.cache
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.Form1.resources
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.Properties.Resources.resources
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.csproj.GenerateResource.Cache
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.csproj.CoreCompileInputs.cache
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.exe
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.pdb

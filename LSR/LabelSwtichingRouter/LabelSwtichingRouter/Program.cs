@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LabelSwtichingRouter;
+using LabelSwitchingRouter;
 
 namespace LabelSwitchingRouter
 {
@@ -11,18 +11,13 @@ namespace LabelSwitchingRouter
     {
         static void Main(string[] args)
         {
-            String str=Config.getProperty("a");
-            Console.WriteLine(str);
             Console.ReadLine();
             LabelSwitchingRouter lsr = new LabelSwitchingRouter();
             InputManager inputManager = new InputManager();
-            inputManager.ProcessPackage += passToInOutModule;
+            inputManager.ProcessPackage += lsr.passToInModule;
             inputManager.waitForInput();
         }
 
-        private static void passToInOutModule(object oSender, PacketPackage packet)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

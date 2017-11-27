@@ -10,8 +10,8 @@ namespace LabelSwitchingRouter
     class LabelSwitchingRouter
     {
         FIB fib;
-        List<InOutModule> inModules;
-        List<InOutModule> outModules;
+        List<InOutModule> inPorts;
+        List<InOutModule> outPorts;
         int numberOfInputModules, numberOfOutputModules;
 
         public LabelSwitchingRouter()
@@ -19,41 +19,83 @@ namespace LabelSwitchingRouter
             fib = new FIB();
             numberOfInputModules = getInputModulesNumber();
             numberOfOutputModules = getOutputModulesNumber();
-            inModules = new List<InOutModule>();
-            outModules = new List<InOutModule>();
+            inPorts = new List<InOutModule>();
+            outPorts = new List<InOutModule>();
 
             createInModules(numberOfInputModules);
             createOutModules(numberOfOutputModules);
         }
         private int getInputModulesNumber()
         {
-            int number = Config.getIntegerProperty("NumberOfInputModules");
+            int number = Config.getIntegerProperty("NumberOfInputPorts");
             return number;
         }
         private int getOutputModulesNumber()
         {
-            int number = Config.getIntegerProperty("NumberOfOutputModules");
+            int number = Config.getIntegerProperty("NumberOfOutputPorts");
             return number;
 
         }
 
-        private void createOutModules(int numberOfOutputModules)
+        private void createOutModules(int numberOfOutputPorts)
         {
-            for (int i = 0; i < numberOfOutputModules; i++)
+            for (int i = 0; i < numberOfOutputPorts; i++)
             {
-                String interfaceAddress = Config.getProperty("InModuleAddress" + i);
-                outModules.Add(new OutModule(interfaceAddress));
+                int portNumber = Config.getIntegerProperty("OutPortNumber" + i);
+                OutModule outPort = new OutModule(portNumber);
+                outPorts.Add(outPort);
             }
 
         }
 
-        private void createInModules(int numberOfInputModules)
+        private void createInModules(int numberOfInputPorts)
         {
-            for (int i = 0; i < numberOfInputModules; i++)
+            for (int i = 0; i < numberOfInputPorts; i++)
             {
-                String interfaceAddress = Config.getProperty("OutModuleAddress" + i);
-                inModules.Add(new InModule(interfaceAddress, fib.ReturnSubTable(interfaceAddress)));
+                int portNumber = int.Parse(Config.getProperty("InPortNumber" + i));
+                InModule inPort = new InModule(portNumber, fib.ReturnSubTable(portNumber));
+                inPorts.Add(inPort);
             }
+        }
+
+        public void passToInModule(object oSender, object received)
+        {
+            InModule inPort;
+            int destinationPort;
+            if (received.GetType() == typeof(Packet))
+            {
+                Packet receivedPacket = (Packet)received;
+                int destinationInPort = getPortNumber(receivedPacket);
+                inPort= getInPort(destinationInPort);
+                inPort.processPacket(receivedPacket);
+            }
+            else if (received.GetType() == typeof(MPLSPack))
+            {
+                MPLSPack receivedPack = (MPLSPack)received;
+                destinationPort=receivedPack.destinationPort;
+                inPort = getInPort(destinationPort);
+                inPort.processPack(receivedPack);
+            }
+
+
+        }
+        private int getPortNumber(Packet receivedPacket)
+        {
+            int portNumber = receivedPacket.destinationPort;
+            return portNumber;
+        }
+        private InModule getInPort(int portNumber)
+        {
+            InModule inPort = null;
+            InModule comparedPort = null;
+            for(int i=0; i<inPorts.Count; i++)
+            {
+                comparedPort = (InModule)inPorts.ElementAt(i);
+                int comparedPortNumber = comparedPort.getPortNumber();
+                if (comparedPortNumber == portNumber)
+                    inPort = comparedPort;
+            }
+            return inPort;                
         }
 
     }

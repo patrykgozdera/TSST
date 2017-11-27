@@ -8,33 +8,47 @@ namespace LabelSwitchingRouter
 {
     class InOutModule
     {
-        protected static String portNumber;
+        protected int portNumber;
         public InOutModule() { }
     }
 
     class InModule : InOutModule
     {
         private FIB fib;
-        private string interfaceAddress;
         private List<FIB.Entry> list;
 
-        public InModule(String number, FIB subMasterFIB)
+        public InModule(int portNumber, FIB subMasterFIB)
         {
-            portNumber = number;
+            this.portNumber = portNumber;
             fib = subMasterFIB;
         }
 
-        public InModule(string interfaceAddress, List<FIB.Entry> list)
+        public InModule(int portNumber, List<FIB.Entry> list)
         {
-            this.interfaceAddress = interfaceAddress;
+            this.portNumber = portNumber;
             this.list = list;
         }
 
         public List<MPLSPacket> Route(MPLSPack pack)
         {
             List<MPLSPacket> packets = UnpackPack(pack);
-            packets.ForEach(ChangeLabel);
+            //packets.ForEach(ChangeLabel);
             return packets;
+        }
+        
+        public void processPacket(Packet packet)
+        {
+
+        }
+        
+        public void processPack(MPLSPack mplsPack)
+        {
+
+        }
+
+        public int getPortNumber()
+        {
+            return portNumber;
         }
 
         public List<MPLSPacket> UnpackPack(MPLSPack pack)
@@ -43,32 +57,35 @@ namespace LabelSwitchingRouter
             //ForEach(ChangeLabel);
 
         }
-
+        /*
         private void ChangeLabel(MPLSPacket packet)
         {
-            Tuple<String, int> FIBOutput = fib.GetOutput(portNumber, packet.GetLabelFromStack());
+            Tuple<string, int> FIBOutput = fib.GetOutput(InOutModule.portNumber, packet.GetLabelFromStack());
             String port = FIBOutput.Item1;
             int label = FIBOutput.Item2;
             packet.PutLabelOnStack(label);
         }
+        */
     }
-
-    class OutModule : InOutModule
-    {
-        List<MPLSPacket> packetBuffer;
-        public OutModule(String number)
+    
+        class OutModule : InOutModule
         {
-            portNumber = number;
-            packetBuffer = new List<MPLSPacket>();
-        }
+            List<MPLSPacket> packetBuffer;
+            public OutModule(int number)
+            {
+                portNumber = number;
+                packetBuffer = new List<MPLSPacket>();
+            }
 
-        public void addToBuffer(MPLSPacket packet)
-        {
-            packetBuffer.Add(packet);
-        }
+            public void addToBuffer(MPLSPacket packet)
+            {
+                packetBuffer.Add(packet);
+            }
 
-        public delegate void packIsReadyDelegate();
-        public event packIsReadyDelegate sendPackage;
+            public delegate void packIsReadyDelegate();
+            public event packIsReadyDelegate sendPackage;
+
+        }
 
     }
 }

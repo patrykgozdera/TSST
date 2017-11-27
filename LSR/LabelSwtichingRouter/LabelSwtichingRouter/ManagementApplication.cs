@@ -21,7 +21,7 @@ namespace LabelSwitchingRouter
             MAInputSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             String ipString = Config.getProperty("NMSAdress");
             ipAddress = IPAddress.Parse(ipString);
-            IPEndPoint remoteEP = new IPEndPoint(ipAddress, Int32.Parse(Config.getProperty("NMSPort"));
+            IPEndPoint remoteEP = new IPEndPoint(ipAddress, Int32.Parse(Config.getProperty("NMSPort")));
             MAInputSocket.Bind(remoteEP);
 
             while (true)

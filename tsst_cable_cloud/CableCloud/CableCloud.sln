@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CableCloud", "CableCloud\CableCloud.csproj", "{E02B226A-49BE-4A0B-847F-130693831BBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsst_client", "..\..\tsst_client\tsst_client\tsst_client.csproj", "{F9A62193-8C61-4DA8-BC84-ED8EFDF2104A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E02B226A-49BE-4A0B-847F-130693831BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E02B226A-49BE-4A0B-847F-130693831BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E02B226A-49BE-4A0B-847F-130693831BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E02B226A-49BE-4A0B-847F-130693831BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9A62193-8C61-4DA8-BC84-ED8EFDF2104A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9A62193-8C61-4DA8-BC84-ED8EFDF2104A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9A62193-8C61-4DA8-BC84-ED8EFDF2104A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9A62193-8C61-4DA8-BC84-ED8EFDF2104A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A989B86E-6AA4-45B6-B136-687A6A7340DB}
+	EndGlobalSection
+EndGlobal

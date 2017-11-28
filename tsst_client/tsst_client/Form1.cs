@@ -17,9 +17,9 @@ namespace tsst_client
 {
     public partial class Form1 : Form
     {
-        Socket output_socket = null;
-        Socket inputSocket = null;
-        Socket foreignSocket = null;
+        static Socket output_socket = null;
+        static Socket inputSocket = null;
+        static Socket foreignSocket = null;
         Message messageOut = new Message();
         Message messageIn = new Message();
 
@@ -33,11 +33,14 @@ namespace tsst_client
             output_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPAddress ipAdd = IPAddress.Parse("127.0.0.1");
             IPEndPoint remoteEP = new IPEndPoint(ipAdd, Int32.Parse(textBox1.Text)); //Int32.Parse(ConfigurationManager.AppSettings["output_port"]));
-          output_socket.Connect(remoteEP);           
-        }               
+            output_socket.Connect(remoteEP);    
+        
+        }    
 
-        private void connect_b_Click(object sender, EventArgs e)   //listen click tak naprawdę
-        {            
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+            Connect();
             if (!backgroundWorker1.IsBusy)
             {
                 backgroundWorker1.RunWorkerAsync();
@@ -59,13 +62,22 @@ namespace tsst_client
                 {
                     random_meassage = message_tb.Text + RandomString();
                     packet = new Message(random_meassage, Int32.Parse(textBox2.Text), Int32.Parse(textBox1.Text), GetTimeStamp(), "I1");
-                    Connect();
-                    output_socket.Send(GetSerializedMessage(packet));
-                    logs_list.Invoke(new Action(delegate ()
+                    //Connect();
+                    if (output_socket.Connected)
                     {
-                        logs_list.Items.Add(i + ": " + packet.s + " | " + packet.output_port + " | " + packet.timestamp);
-                        logs_list.SelectedIndex = logs_list.Items.Count - 1;
-                    }));                    
+                        int messageSize = GetSerializedMessage(packet).Length;
+                        byte[] mSize = BitConverter.GetBytes(messageSize);
+
+                        output_socket.Send(mSize);
+                        output_socket.Send(GetSerializedMessage(packet));
+                        logs_list.Invoke(new Action(delegate ()
+                        {
+                            logs_list.Items.Add(i + ": " + packet.s + " | " + packet.output_port + " | " + packet.timestamp);
+                            logs_list.SelectedIndex = logs_list.Items.Count - 1;
+                        }));           
+
+                    }
+
                     //Thread.Sleep(Int32.Parse(delay_tb.Text));
                     await Task.Delay(Int32.Parse(delay_tb.Text));                    
                 }
@@ -104,12 +116,16 @@ namespace tsst_client
             IPEndPoint remoteEP = new IPEndPoint(ipAdd, Int32.Parse(textBox2.Text)); //Int32.Parse(ConfigurationManager.AppSettings["input_port"]));
             inputSocket.Bind(remoteEP);
             int i = 1;
+
             while (true)
             {
                 inputSocket.Listen(0);                
                 foreignSocket = inputSocket.Accept();
-                byte[] bytes = new byte[foreignSocket.SendBufferSize];
+                byte[] objectSize = new byte[4];
+                foreignSocket.Receive(objectSize, 0, 4, SocketFlags.None);
+                int messageSize = BitConverter.ToInt32(objectSize, 0);
 
+                byte[] bytes = new byte[messageSize];
                 int readByte = foreignSocket.Receive(bytes);
                 Thread t;
                 t = new Thread(() =>
@@ -130,8 +146,7 @@ namespace tsst_client
         }           
 
         private byte[] GetSerializedMessage(Message mes)    //Serializacja bajtowa
-        {            
-            //StreamWriter streamWriter = new StreamWriter(new Message(message_tb.Text, 123));
+        {                        
             BinaryFormatter bf = new BinaryFormatter();
             MemoryStream ms = new MemoryStream();
             bf.Serialize(ms, mes);
@@ -155,8 +170,8 @@ namespace tsst_client
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)         //Backgrounworker - w tle nasłuchuje
         {
             try
-            {
-                Listen();            
+            {                
+                Listen();
             }
             catch(IOException)
             {

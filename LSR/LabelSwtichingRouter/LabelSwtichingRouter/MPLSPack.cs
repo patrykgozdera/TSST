@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 namespace LabelSwitchingRouter
 {
 
-    class MPLSPack : MPLS
+    class MPLSPack : MPLSObject
     {
-        private int destinationPort = -1;
         private List<MPLSPacket> packets;
 
         MPLSPack(List<MPLSPacket> packets)
         {
             this.packets = packets;
-
-
         }
 
 

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace LabelSwitchingRouter
 {
     [Serializable]
-    class MPLS
+    class MPLSObject
     {
+        public int destinationPort { get; set; }
         public Stack<int> labelStack;
-
 
         public int GetLabelFromStack()
         {

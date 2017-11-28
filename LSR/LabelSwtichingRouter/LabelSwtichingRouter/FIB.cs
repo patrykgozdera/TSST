@@ -9,6 +9,7 @@ namespace LabelSwitchingRouter
     class FIB
     {
         private List<Entry> routingTable;
+        private List<int[]> ipTable;
 
         public class Entry
         {
@@ -57,9 +58,9 @@ namespace LabelSwitchingRouter
             else Console.WriteLine("Entry with such input parameters doesn't exist in this FIB.");
         }
 
-        public List<Entry> ReturnSubTable(int inport)
+        public FIB ReturnSubTable(int inport)
         {
-            return routingTable.FindAll(x => x.InPort == inport);
+            return new FIB(routingTable.FindAll(x => x.InPort == inport));
         }
 
         private Entry FindInput(int iport, int ilabel)
@@ -67,11 +68,19 @@ namespace LabelSwitchingRouter
             return routingTable.FindAll(x => x.InPort == iport).Find(y => y.InLabel == ilabel);
         }
 
-        public Tuple<String, int> GetOutput(int iport, int ilabel)
+        public int[] GetOutput(int iport, int ilabel)
         {
             Entry result = routingTable.FindAll(x => x.InPort == iport).Find(y => y.InLabel == ilabel);
-            Tuple<int, int> tuple = new Tuple<int, int>(result.OutPort, result.OutLabel);
-            return tuple;
+            int[] outPair = { result.OutPort, result.OutLabel };
+            return outPair;
+        }
+
+        public int ExchangeIpAddressForLabel(String ipaddress)
+        {
+            int address = Int32.Parse(ipaddress);
+            int[] pair = ipTable.Find(x => x[1] == address);
+            int label = pair[0];
+            return label;
         }
 
     }

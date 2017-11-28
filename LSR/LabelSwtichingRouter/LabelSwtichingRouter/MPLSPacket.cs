@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LabelSwitchingRouter
 {
-    class MPLSPacket : MPLS
+    class MPLSPacket : MPLSObject
     {
         public Packet ipPacket;
 

@@ -8,3 +8,12 @@ C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\ts
 C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.csproj.CoreCompileInputs.cache
 C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.exe
 C:\Users\Patryk-student ELKI\Documents\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.pdb
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\bin\Debug\tsst_client.exe.config
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\bin\Debug\tsst_client.exe
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\bin\Debug\tsst_client.pdb
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.csprojResolveAssemblyReference.cache
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.Form1.resources
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.Properties.Resources.resources
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.csproj.GenerateResource.Cache
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.exe
+C:\Users\73773\Desktop\projekty\TSST\tsst_client\tsst_client\obj\Debug\tsst_client.pdb

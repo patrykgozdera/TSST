@@ -44,7 +44,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.connect_b = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // message_tb
@@ -184,22 +184,22 @@
             this.label7.TabIndex = 16;
             this.label7.Text = "PortIN";
             // 
-            // connect_b
+            // button1
             // 
-            this.connect_b.Location = new System.Drawing.Point(427, 70);
-            this.connect_b.Name = "connect_b";
-            this.connect_b.Size = new System.Drawing.Size(75, 23);
-            this.connect_b.TabIndex = 17;
-            this.connect_b.Text = "LISTEN";
-            this.connect_b.UseVisualStyleBackColor = true;
-            this.connect_b.Click += new System.EventHandler(this.connect_b_Click);
+            this.button1.Location = new System.Drawing.Point(427, 67);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "CONNECT";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 411);
-            this.Controls.Add(this.connect_b);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label6);
@@ -240,7 +240,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button connect_b;
+        private System.Windows.Forms.Button button1;
     }
 }
 

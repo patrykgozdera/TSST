@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LabelSwitchingRouter
 {
-    class InOutModule
+    class Commutator
     {
     }
 }

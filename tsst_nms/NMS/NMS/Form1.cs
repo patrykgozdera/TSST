@@ -22,6 +22,7 @@ namespace NMS
         static Socket foreignSocket = null;
         public Command inCommand = new Command();
         public Command outCommand = new Command();
+        private int outputPort;
 
         public Form1()
         {
@@ -34,7 +35,23 @@ namespace NMS
 
         private void update_b_Click(object sender, EventArgs e)
         {
-                      
+            outCommand.agentInterface = "Add";
+            outCommand.agentPort = comboBox1.SelectedIndex;
+            outCommand.inPort = Int32.Parse(textBox_ip.Text);
+            outCommand.inLabel = Int32.Parse(textBox_il.Text);
+            outCommand.outPort = Int32.Parse(textBox_op.Text);
+            outCommand.outLabel = Int32.Parse(textBox_ol.Text);
+            SendSingleCommand(outCommand);
+        }
+        private void delete_b_Click(object sender, EventArgs e)
+        {
+            outCommand.agentInterface = "Delete";
+            outCommand.agentPort = comboBox1.SelectedIndex;
+            outCommand.inPort = Int32.Parse(textBox_ip.Text);
+            outCommand.inLabel = Int32.Parse(textBox_il.Text);
+            outCommand.outPort = Int32.Parse(textBox_op.Text);
+            outCommand.outLabel = Int32.Parse(textBox_ol.Text);
+            SendSingleCommand(outCommand);
         }
 
         public void Listen()
@@ -55,12 +72,22 @@ namespace NMS
                 t = new Thread(() =>
                 {
                     inCommand = GetDeserializedCommand(bytes);
+                    outputPort = inCommand.agentPort;
+                    comboBox1.Invoke(new Action(delegate ()
+                    {
+                    comboBox1.Items.Add(inCommand.agentPort);
+                    }
+                    ));
                     listBox2.Invoke(new Action(delegate ()
                     {
                         listBox2.Items.Add(inCommand.agentInterface + " " + inCommand.agentPort);
                         listBox2.SelectedIndex = listBox1.Items.Count - 1;
                     }));
-                    SendSingleCommand(outCommand);
+
+                    if(inCommand.agentInterface != null)
+                    {
+                        ParseConfig();
+                    }
                     i++;
                 }
                 );
@@ -89,27 +116,34 @@ namespace NMS
         {
             output_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPAddress ipAdd = IPAddress.Parse("127.0.0.1");
-            IPEndPoint remoteEP = new IPEndPoint(ipAdd, GetPort()); //Int32.Parse(ConfigurationManager.AppSettings["output_port"]));
+            IPEndPoint remoteEP = new IPEndPoint(ipAdd, outputPort); //Int32.Parse(ConfigurationManager.AppSettings["output_port"]));
             output_socket.Connect(remoteEP);
         }
-         
 
-        private int GetPort()
+
+        private void ParseConfig()
         {
-            int p = 0;
-            for (int i = 1; i <= Config.getIntegerProperty("NbOfRouters"); i++)
-            {
-                if (inCommand.agentInterface == Config.getProperty("Agent" + i.ToString()))
+            
+                string line;
+                StreamReader file = new StreamReader("C:\\Users\\Patryk-student ELKI\\Documents\\TSST\\tsst_nms\\NMS\\NMS\\bin\\Debug\\" + inCommand.agentInterface + ".txt");
+                while ((line = file.ReadLine()) != null)
                 {
-                    p = inCommand.agentPort;
-                    outCommand.inPort = Config.getIntegerProperty("InPort" + i.ToString());
-                    outCommand.inLabel = Config.getIntegerProperty("InLabel" + i.ToString());
-                    outCommand.outPort = Config.getIntegerProperty("OutPort" + i.ToString());
-                    outCommand.outLabel = Config.getIntegerProperty("OutLabel" + i.ToString());
+                    string[] integerStrings = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    
+                    outCommand.inPort = Int32.Parse(integerStrings[0]);
+                    outCommand.inLabel = Int32.Parse(integerStrings[1]);
+                    outCommand.outPort = Int32.Parse(integerStrings[2]);
+                    outCommand.outLabel = Int32.Parse(integerStrings[3]);
+                    SendSingleCommand(outCommand);
+                    listBox2.Invoke(new Action(delegate ()
+                    {
+                        listBox2.Items.Add(outCommand.inPort + " " + outCommand.inLabel + " " + outCommand.outPort + " " + outCommand.outLabel);
+                        listBox2.SelectedIndex = listBox1.Items.Count - 1;
+                    }));
                 }
-            }                       
-            return p;
+            
         }
+
 
         private Command GetDeserializedCommand(byte[] b)
         {
@@ -160,6 +194,22 @@ namespace NMS
                 MessageBox.Show(e.Result.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-               
+            private int GetPort()
+        {
+            int p = 0;
+            for (int i = 1; i <= Config.getIntegerProperty("NbOfRouters"); i++)
+            {
+                if (inCommand.agentInterface == Config.getProperty("Agent" + i.ToString()))
+                {
+                    p = inCommand.agentPort;
+                    outCommand.inPort = Config.getIntegerProperty("InPort" + i.ToString());
+                    outCommand.inLabel = Config.getIntegerProperty("InLabel" + i.ToString());
+                    outCommand.outPort = Config.getIntegerProperty("OutPort" + i.ToString());
+                    outCommand.outLabel = Config.getIntegerProperty("OutLabel" + i.ToString());
+                }
+            }                       
+            return p;
+        }
+                
     }
 }

@@ -60,19 +60,10 @@ namespace CableCloud
                 byte[] bytes = new byte[messageSize];
                 inputSocket.Receive(bytes, 0, messageSize, SocketFlags.None);
                 Console.WriteLine("Received packet from node: " + nodeName);
+                Console.WriteLine("\n" + i++);
 
 
-                /*Thread t;
-                t = new Thread(() =>
-                {
-                    messageIn = GetDeserializedMessage(bytes);
-                    Console.WriteLine(i + ": " + messageIn.s + " | " + messageIn.output_port + " | " + messageIn.timestamp);
-                    //SendSingleMessage(messageIn);
-                    i++;
-                }
-                );
-                t.Start()
-                */
+               SendingManager.Send(bytes, nodeName, port);
             }
         }
 

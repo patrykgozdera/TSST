@@ -13,6 +13,7 @@ namespace CableCloud
         static void Main(string[] args)
         {
             ConnectionsTable.init();
+            SendingManager.init();
             initListeningOnSockets();
         }
 

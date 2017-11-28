@@ -26,6 +26,7 @@ namespace CableCloud
             TcpListener listener = new TcpListener(port);
             listener.Start();
             outSocket = listener.AcceptSocket();
+            Console.WriteLine("connected");
         }
         public void Send(byte[] array)
         {

@@ -1,0 +1,10 @@
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\bin\Debug\NMS.exe.config
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\bin\Debug\NMS.exe
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\bin\Debug\NMS.pdb
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\obj\Debug\NMS.csprojResolveAssemblyReference.cache
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\obj\Debug\NMS.Form1.resources
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\obj\Debug\NMS.Properties.Resources.resources
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\obj\Debug\NMS.csproj.GenerateResource.Cache
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\obj\Debug\NMS.csproj.CoreCompileInputs.cache
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\obj\Debug\NMS.exe
+C:\Users\Patryk-student ELKI\Documents\TSST\tsst_nms\NMS\NMS\obj\Debug\NMS.pdb

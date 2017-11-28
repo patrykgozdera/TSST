@@ -115,12 +115,13 @@ namespace tsst_client
             IPAddress ipAdd = IPAddress.Parse("127.0.0.1");
             IPEndPoint remoteEP = new IPEndPoint(ipAdd, Int32.Parse(textBox2.Text)); //Int32.Parse(ConfigurationManager.AppSettings["input_port"]));
             inputSocket.Bind(remoteEP);
+            inputSocket.Connect();
             int i = 1;
 
             while (true)
             {
-                inputSocket.Listen(0);                
-                foreignSocket = inputSocket.Accept();
+                //inputSocket.Listen(0);                
+                //foreignSocket = inputSocket.Accept();
                 byte[] objectSize = new byte[4];
                 foreignSocket.Receive(objectSize, 0, 4, SocketFlags.None);
                 int messageSize = BitConverter.ToInt32(objectSize, 0);

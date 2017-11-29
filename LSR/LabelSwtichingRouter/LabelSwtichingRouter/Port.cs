@@ -10,7 +10,6 @@ namespace LabelSwitchingRouter
     {
         protected int portNumber;
         private FIB fib;
-        private List<FIB.Entry> list;
 
         public InPort(int portNumber, FIB subMasterFIB)
         {
@@ -18,18 +17,19 @@ namespace LabelSwitchingRouter
             fib = subMasterFIB;
         }
 
-        public MPLSPacket processPacket(Packet packet)
+        public MPLSPacket ProcessPacket(Packet packet)
         {
             MPLSPacket labeledMPLS = SetLabel(packet);
             return labeledMPLS;
         }
 
-        public List<MPLSPacket> processPack(MPLSPack mplsPack)
+        public List<MPLSPacket> ProcessPack(MPLSPack mplsPack)
         {
             List<MPLSPacket> packets = UnpackPack(mplsPack);
             packets.ForEach(ChangeLabel);
             return packets;
         }
+
 
         public List<MPLSPacket> UnpackPack(MPLSPack pack)
         {
@@ -40,20 +40,37 @@ namespace LabelSwitchingRouter
         {
             int label = fib.ExchangeIpAddressForLabel(packet.destinationAddress);
             MPLSPacket mplspacket = new MPLSPacket(packet, label);
+            mplspacket.DestinationPort = mplspacket.ipPacket.destinationPort;
             ChangeLabel(mplspacket);
             return mplspacket;
         }
 
         private void ChangeLabel(MPLSPacket packet)
         {
-            int[] FIBOutput = fib.GetOutput(packet.destinationPort, packet.GetLabelFromStack());
+            int oldPort = packet.DestinationPort;
+            int oldLabel = packet.GetLabelFromStack();
+            int[] FIBOutput = fib.GetOutput(oldPort, oldLabel);
             int port = FIBOutput[0];
             int label = FIBOutput[1];
-            packet.destinationPort = port;
+            packet.DestinationPort = port;
             packet.PutLabelOnStack(label);
+
+            if (fib.LookForLabelToBeAdded(oldPort, oldLabel) != 0)
+            {
+                packet.PutLabelOnStack(fib.LookForLabelToBeAdded(oldPort, oldLabel));
+            }
+            if (fib.LookForLabelToBeRemoved(oldPort, oldLabel) == oldLabel)
+            {
+                packet.RemoveTopLabelFromStack();
+            }
         }
 
-        public int getPortNumber()
+        private void EndMPLSTunnel(MPLSPacket packet)
+        {
+            packet.RemoveTopLabelFromStack();
+        }
+
+        public int GetPortNumber()
         {
             return portNumber;
         }
@@ -62,9 +79,7 @@ namespace LabelSwitchingRouter
     class OutPort
     {
         protected int portNumber;
-        List<MPLSPacket> packetBuffer;
-
-        public int GetPortNumber { get; internal set; }
+        protected List<MPLSPacket> packetBuffer;
 
         public OutPort(int number)
         {
@@ -72,13 +87,35 @@ namespace LabelSwitchingRouter
             packetBuffer = new List<MPLSPacket>();
         }
 
-        public void addToBuffer(MPLSPacket packet)
+        public void AddToBuffer(MPLSPacket packet)
         {
             packetBuffer.Add(packet);
+            Console.WriteLine("Packet with label {0} has been added to buffer of outPort {1}", packet.labelStack.Peek(), portNumber);
+
+        }
+
+        public MPLSPack PrepareMPLSPackFromBuffer()
+        {
+            MPLSPack pack = new MPLSPack(packetBuffer);
+            pack.DestinationPort = packetBuffer[0].DestinationPort;
+            packetBuffer.Clear();
+            return pack;
+        }
+
+        public Packet PrepareIPPacketFromBuffer(int bufferPosition)
+        {
+            Packet ipPacket = packetBuffer[bufferPosition].ipPacket;
+            packetBuffer.RemoveAt(bufferPosition);
+            return ipPacket;
+        }
+
+        public int GetPortNumber()
+        {
+            return portNumber;
         }
 
         public delegate void packIsReadyDelegate();
-        public event packIsReadyDelegate sendPackage;
+        public event packIsReadyDelegate SendPackage;
 
     }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace LabelSwitchingRouter
 {
@@ -12,6 +13,8 @@ namespace LabelSwitchingRouter
         FIB fib;
         List<InPort> inPorts;
         List<OutPort> outPorts;
+        Timer sendingTimer;
+        RouterAgent agent;
         int numberOfInputModules, numberOfOutputModules;
 
         public LabelSwitchingRouter()
@@ -21,9 +24,13 @@ namespace LabelSwitchingRouter
             numberOfOutputModules = GetOutputModulesNumber();
             inPorts = new List<InPort>();
             outPorts = new List<OutPort>();
-
+            sendingTimer = new Timer();
+            sendingTimer.Interval = Config.getIntegerProperty("SendingInterval");
+            agent = new RouterAgent(fib, inPorts);
             CreateInPorts(numberOfInputModules);
             CreateOutPorts(numberOfOutputModules);
+            Console.WriteLine("Stworzono LSR.");
+
         }
 
         private int GetInputModulesNumber()
@@ -40,26 +47,39 @@ namespace LabelSwitchingRouter
 
         private void CreateOutPorts(int numberOfOutputPorts)
         {
-            for (int i = 0; i < numberOfOutputPorts; i++)
+            for (int i = 1; i <= numberOfOutputPorts; i++)
             {
                 int portNumber = Config.getIntegerProperty("OutPortNumber" + i);
                 OutPort outPort = new OutPort(portNumber);
                 outPorts.Add(outPort);
+                Console.WriteLine("Created outPort no. " + i);
             }
 
         }
 
         private void CreateInPorts(int numberOfInputPorts)
         {
-            for (int i = 0; i < numberOfInputPorts; i++)
+            for (int i = 1; i <= numberOfInputPorts; i++)
             {
                 int portNumber = int.Parse(Config.getProperty("InPortNumber" + i));
                 InPort inPort = new InPort(portNumber, fib.ReturnSubTable(portNumber));
                 inPorts.Add(inPort);
+                Console.WriteLine("Created inPort no. " + portNumber);
             }
         }
 
-        public void RouteIncoming(object oSender, object received) //jak to nazwać?
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            OutPort outPort = null;
+            for (int i = 0; i < outPorts.Count; i++)
+            {
+                outPort = (OutPort)outPorts.ElementAt(i);
+                MPLSPack bufferContent = outPort.PrepareMPLSPackFromBuffer();
+                OutputManager.sendMPLSPack(bufferContent);
+            }
+        }
+
+        public void PassToInModule(object oSender, object received)
         {
             InPort inPort;
             int destinationPort;
@@ -68,14 +88,15 @@ namespace LabelSwitchingRouter
                 Packet receivedPacket = (Packet)received;
                 destinationPort = GetPortNumber(receivedPacket);
                 inPort = GetInPort(destinationPort);
-                MPLSPacket processedPacket = inPort.processPacket(receivedPacket);
+                MPLSPacket processedPacket = inPort.ProcessPacket(receivedPacket);
+                Commutate(processedPacket);
             }
             else if (received.GetType() == typeof(MPLSPack))
             {
                 MPLSPack receivedPack = (MPLSPack)received;
-                destinationPort = receivedPack.destinationPort;
+                destinationPort = receivedPack.DestinationPort;
                 inPort = GetInPort(destinationPort);
-                List<MPLSPacket> processedPackets = inPort.processPack(receivedPack);
+                List<MPLSPacket> processedPackets = inPort.ProcessPack(receivedPack);
                 foreach (MPLSPacket packet in processedPackets) {
                     Commutate(packet);
                 } 
@@ -92,7 +113,7 @@ namespace LabelSwitchingRouter
         {
             foreach (InPort port in inPorts)
             {
-                int comparedPortNumber = port.getPortNumber();
+                int comparedPortNumber = port.GetPortNumber();
                 if (comparedPortNumber == portNumber)
                     return port;
             }
@@ -101,19 +122,18 @@ namespace LabelSwitchingRouter
 
         private void Commutate(MPLSPacket packet)
         {
-            int packetOutPort = packet.destinationPort;
+            int packetOutPort = packet.DestinationPort;
             int portNumber;
             foreach (OutPort port in outPorts)
             {
-                portNumber = port.GetPortNumber;
+                portNumber = port.GetPortNumber();
                 if (packetOutPort == portNumber)
                 {
-                    port.addToBuffer(packet);
+                    port.AddToBuffer(packet);
                     return;
                 }
             }
         }
-      
+        
     }
-
 }

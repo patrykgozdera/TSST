@@ -14,3 +14,6 @@ C:\Users\73773\Desktop\projekty\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRout
 C:\Users\73773\Desktop\projekty\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.pdb
 C:\Users\73773\Desktop\projekty\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\obj\Debug\LabelSwtichingRouter.exe
 C:\Users\73773\Desktop\projekty\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\obj\Debug\LabelSwtichingRouter.pdb
+D:\Adrian\Dokumenty\GitHub\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.exe.config
+D:\Adrian\Dokumenty\GitHub\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.exe
+D:\Adrian\Dokumenty\GitHub\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.pdb

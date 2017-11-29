@@ -11,7 +11,8 @@ namespace CableCloud
 {
     public class InSocket
     {
-        static Socket inputSocket = null;
+        public static int PORT_NUMBER_SIZE = 4;
+        private Socket inputSocket = null;
         public Message messageOut = new Message();
         public Message messageIn = new Message();
 
@@ -40,7 +41,7 @@ namespace CableCloud
         }
         public void ListenForConnection()
         {
-            TcpListener listener = new TcpListener(port);
+            TcpListener listener = new TcpListener(IPAddress.Any,port);
             listener.Start();
             inputSocket = listener.AcceptSocket();
             Console.WriteLine("connected");
@@ -48,23 +49,40 @@ namespace CableCloud
 
         public void ListenForIncomingData()
         {
-
             int i = 1;
             while (true)
             {
-                byte[] objectSize = new byte[4];
-                inputSocket.Receive(objectSize, 0, 4, SocketFlags.None);
-                int messageSize = BitConverter.ToInt32(objectSize, 0);
-                Console.WriteLine(messageSize);
-
-                byte[] bytes = new byte[messageSize];
-                inputSocket.Receive(bytes, 0, messageSize, SocketFlags.None);
+                int inputSize = ReceiveInputSize();
+                byte[] receivedData = receiveData(inputSize);
+                int sourcePort = GetSourcePort(receivedData);
                 Console.WriteLine("Received packet from node: " + nodeName);
                 Console.WriteLine("\n" + i++);
-
-
-               SendingManager.Send(bytes, nodeName, port);
+                SendingManager.Send(receivedData, nodeName, sourcePort);
             }
+        }
+        private int ReceiveInputSize()
+        {
+            byte[] objectSize = new byte[4];
+            inputSocket.Receive(objectSize, 0, 4, SocketFlags.None);
+            int messageSize = BitConverter.ToInt32(objectSize, 0);
+            Console.WriteLine(messageSize);
+            return messageSize;
+        }
+
+        private byte[] receiveData(int inputSize)
+        {
+            byte[] bytes = new byte[inputSize];
+            inputSocket.Receive(bytes, 0, inputSize, SocketFlags.None);
+            return bytes;
+        }
+
+        private int GetSourcePort(byte[] receivedData)
+        {
+            byte[] sourcePort = new byte[4];
+            for (int i = 0; i < PORT_NUMBER_SIZE; i++)
+                sourcePort[i]= receivedData[i];
+            int convertedSourcePort = BitConverter.ToInt32(sourcePort,0);
+            return convertedSourcePort;
         }
 
 

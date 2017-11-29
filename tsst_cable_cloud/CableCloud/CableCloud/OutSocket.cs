@@ -23,7 +23,7 @@ namespace CableCloud
         }
         private void waitForConnection()
         {
-            TcpListener listener = new TcpListener(port);
+            TcpListener listener = new TcpListener(IPAddress.Any,port);
             listener.Start();
             outSocket = listener.AcceptSocket();
             Console.WriteLine("connected");

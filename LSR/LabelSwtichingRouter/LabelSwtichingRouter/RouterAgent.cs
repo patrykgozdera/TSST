@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NMS;
+using System.Timers;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
@@ -14,9 +15,9 @@ namespace LabelSwitchingRouter
 {
     class RouterAgent
     {
-        static Socket output_socket = null;
-        static Socket inputSocket = null;
-        static Socket foreignSocket = null;
+        private Socket output_socket = null;
+        private Socket inputSocket = null;
+        private Socket foreignSocket = null;
         public Command inCommand, outCommand;
         private List<InPort> inPorts;
         private FIB fib;
@@ -32,7 +33,7 @@ namespace LabelSwitchingRouter
             _interface = Config.getProperty("NMSInterface");
             outport = Config.getIntegerProperty("NMSListenPort");
 
-            SendSingleCommand(outCommand);
+            SendSingleCommand(_interface, outport);
 
             inputSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPAddress ipAdd = IPAddress.Parse("127.0.0.1");
@@ -42,44 +43,79 @@ namespace LabelSwitchingRouter
             Listen();
         }
 
-        public void Listen()
+
+        private void SendSingleCommand(string agentID, int agentPort)
         {
-            while (true)
-            {
-                inputSocket.Listen(0);
-                foreignSocket = inputSocket.Accept();
-                byte[] bytes = new byte[foreignSocket.SendBufferSize];
-                int readByte = foreignSocket.Receive(bytes);
+            Command cm = new Command(agentID, agentPort);
+            output_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPAddress ipAdd = IPAddress.Parse("127.0.0.1");
 
-                Thread t;
-                t = new Thread(() =>
-                {
-                    inCommand = GetDeserializedCommand(bytes);
-                    fib.AddEntry(inCommand.inPort, inCommand.inLabel, inCommand.outPort, inCommand.outLabel, inCommand.newLabel, inCommand.removeLabel, inCommand.ipAdress);
-                    fib.UpdatePortsRoutingTables(inPorts);
-                }
-                );
-                t.Start();
-
-
-
-            }
-        }
-
-        private void SendSingleCommand(Command cm)
-        {
-            cm = new Command(_interface, outport, 0, 0, 0, 0, 0, 0, "null");
             Thread tr;
             tr = new Thread(() =>
             {
-                output_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                IPAddress ipAdd = IPAddress.Parse("127.0.0.1");
                 IPEndPoint remoteEP = new IPEndPoint(ipAdd, 7386);
                 output_socket.Connect(remoteEP);
                 output_socket.Send(GetSerializedCommand(cm));
+            });
+            tr.Start();
+        }
+
+        private void SendKeepAliveMessage(string agentID)
+        {
+            Command cm = new Command(agentID);
+            output_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPAddress ipAdd = IPAddress.Parse("127.0.0.1");
+
+            Thread tr;
+            tr = new Thread(() =>
+            {
+                IPEndPoint remoteEP = new IPEndPoint(ipAdd, 7386);
+                output_socket.Connect(remoteEP);
+                output_socket.Send(GetSerializedCommand(cm));
+            });
+            tr.Start();
+        }
+
+        public void Listen()
+        {
+            inputSocket.Listen(0);
+            int readByte;
+            Thread t;
+            t = new Thread(() =>
+            {
+                while (true)
+                {
+                    foreignSocket = inputSocket.Accept();
+                    byte[] bytes = new byte[foreignSocket.SendBufferSize];
+                    readByte = foreignSocket.Receive(bytes);
+                    Console.WriteLine("Odebralem {0} bajtow!", bytes.Length);
+                    inCommand = GetDeserializedCommand(bytes);
+                    if (inCommand.agentId == "Add")
+                    {
+                        fib.AddEntry(inCommand.inPort, inCommand.inLabel, inCommand.outPort, inCommand.outLabel, inCommand.newLabel, inCommand.removeLabel, inCommand.ipAdress);
+                    }
+                    else
+                    {
+                        fib.RemoveEntry(inCommand.inPort, inCommand.inLabel);
+                    }
+                    fib.UpdatePortsRoutingTables(inPorts);
+                }
+            }
+            );
+            t.Start();
+
+            Thread tr;
+            tr = new Thread(() =>
+            {
+                while(true)
+                {
+                    Thread.Sleep(3000);
+                    SendKeepAliveMessage("KeepAlive");
+                }
             }
             );
             tr.Start();
+
         }
 
         private Command GetDeserializedCommand(byte[] b)

@@ -17,3 +17,13 @@ C:\Users\73773\Desktop\projekty\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRout
 D:\Adrian\Dokumenty\GitHub\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.exe.config
 D:\Adrian\Dokumenty\GitHub\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.exe
 D:\Adrian\Dokumenty\GitHub\TSST\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.pdb
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.exe.config
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.exe
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\LabelSwtichingRouter.pdb
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\NMS.exe
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\NMS.pdb
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\bin\Debug\NMS.exe.config
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\obj\Debug\LabelSwitchingRouter.csprojResolveAssemblyReference.cache
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\obj\Debug\LabelSwitchingRouter.csproj.CoreCompileInputs.cache
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\obj\Debug\LabelSwtichingRouter.exe
+C:\Users\Patryk-student ELKI\Desktop\TSST-Router\LSR\LabelSwtichingRouter\LabelSwtichingRouter\obj\Debug\LabelSwtichingRouter.pdb

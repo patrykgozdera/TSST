@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
     <Compile Include="Commutator.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="FIB.cs" />
@@ -65,6 +64,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="bin\Debug\LabelSwtichingRouter.vshost.exe.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Documents\TSST\tsst_nms\NMS\NMS\NMS.csproj">
+      <Project>{7ebdb322-4c24-4787-aca7-ae871604f7a6}</Project>
+      <Name>NMS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

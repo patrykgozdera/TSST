@@ -70,12 +70,21 @@ namespace LabelSwitchingRouter
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            OutPort outPort = null;
-            for (int i = 0; i < outPorts.Count; i++)
+            foreach (OutPort outPort in outPorts)
             {
-                outPort = (OutPort)outPorts.ElementAt(i);
-                MPLSPack bufferContent = outPort.PrepareMPLSPackFromBuffer();
-                OutputManager.sendMPLSPack(bufferContent);
+                if (outPort.SendingToClient())
+                {
+                    for (int index = 0; index <= outPort.GetBufferLength(); index++)
+                    {
+                        Packet bufferObject = outPort.PrepareIPPacketFromBuffer(index);
+                        OutputManager.sendIPPacket(bufferObject);
+                    }
+                }
+                else
+                {
+                    MPLSPack bufferContent = outPort.PrepareMPLSPackFromBuffer();
+                    OutputManager.sendMPLSPack(bufferContent);
+                }
             }
         }
 
@@ -97,9 +106,10 @@ namespace LabelSwitchingRouter
                 destinationPort = receivedPack.DestinationPort;
                 inPort = GetInPort(destinationPort);
                 List<MPLSPacket> processedPackets = inPort.ProcessPack(receivedPack);
-                foreach (MPLSPacket packet in processedPackets) {
+                foreach (MPLSPacket packet in processedPackets)
+                {
                     Commutate(packet);
-                } 
+                }
             }
         }
 
@@ -134,6 +144,6 @@ namespace LabelSwitchingRouter
                 }
             }
         }
-        
+
     }
 }

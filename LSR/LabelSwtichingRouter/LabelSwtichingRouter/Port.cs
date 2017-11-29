@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static LabelSwitchingRouter.FIB;
 
 namespace LabelSwitchingRouter
 {
@@ -11,10 +12,10 @@ namespace LabelSwitchingRouter
         protected int portNumber;
         private FIB fib;
 
-        public InPort(int portNumber, FIB subMasterFIB)
+        public InPort(int portNumber, List<Entry> routingTable)
         {
             this.portNumber = portNumber;
-            fib = subMasterFIB;
+            fib = new FIB(routingTable);
         }
 
         public MPLSPacket ProcessPacket(Packet packet)
@@ -28,6 +29,12 @@ namespace LabelSwitchingRouter
             List<MPLSPacket> packets = UnpackPack(mplsPack);
             packets.ForEach(ChangeLabel);
             return packets;
+        }
+
+        public void UpdateFIB(List<Entry> table)
+        {
+            fib.UpdateRoutingTable(table);
+
         }
 
 
@@ -109,9 +116,19 @@ namespace LabelSwitchingRouter
             return ipPacket;
         }
 
+        public int GetBufferLength() {
+            return packetBuffer.Count();
+        }
+
         public int GetPortNumber()
         {
             return portNumber;
+        }
+
+        public bool SendingToClient()
+        {
+            if (packetBuffer[0].labelStack.Peek() == -1) return true;
+            else return false;
         }
 
         public delegate void packIsReadyDelegate();

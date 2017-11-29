@@ -35,10 +35,6 @@ namespace LabelSwitchingRouter
         public FIB()
         {
             routingTable = new List<Entry>();
-            AddEntry(2, 3, 7, 4, 0, 0, "AkademikRiviera");
-            AddEntry(2, 8, 8, 2, 0, 0, "");
-            AddEntry(2, 5, 6, 1, 0, 0, "");
-
         }
 
         public FIB(List<Entry> rtable) : this()
@@ -50,11 +46,11 @@ namespace LabelSwitchingRouter
         {
             foreach (InPort port in ports) {
                 int inPort = port.GetPortNumber();
-                UpdateRoutingTable(ReturnSubTable(inPort).routingTable);
+                port.UpdateFIB(ReturnSubTable(inPort));
             }
         }
 
-        private void UpdateRoutingTable(List<Entry> routingTable)
+        public void UpdateRoutingTable(List<Entry> routingTable)
         {
             this.routingTable = routingTable;
         }
@@ -75,15 +71,15 @@ namespace LabelSwitchingRouter
             if (entryToBeDeleted != null)
             {
                 routingTable.Remove(entryToBeDeleted);
-                Console.WriteLine("Entry:  inport {0} inlabel {1} outport {2} outlabel {3} removed from FIB.",
+                Console.WriteLine("Deleted entry from FIB: inport {0} inlabel {1} outport {2} outlabel {3} removed from FIB.",
                     entryToBeDeleted.InPort, entryToBeDeleted.InLabel, entryToBeDeleted.OutPort, entryToBeDeleted.OutLabel);
             }
             else Console.WriteLine("Entry with such input parameters doesn't exist in this FIB.");
         }
-
-        public FIB ReturnSubTable(int inport)
+         
+        public List<Entry> ReturnSubTable(int inport)
         {
-            return new FIB(routingTable.FindAll(x => x.InPort == inport));
+            return routingTable.FindAll(x => x.InPort == inport);
         }
 
         private Entry FindInput(int iport, int ilabel)
